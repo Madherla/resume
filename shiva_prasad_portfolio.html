@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Madherla Shiva Prasad</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #1a1a24;
+    --card: #13131c;
+    --border: rgba(255,255,255,0.07);
+    --border-hi: rgba(120,200,255,0.25);
+    --accent: #4fc3f7;
+    --accent2: #7c5cfc;
+    --accent3: #f06292;
+    --text: #e8eaf6;
+    --muted: #7986cb;
+    --muted2: #546e9a;
+    --green: #69f0ae;
+    --amber: #ffd54f;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Lora', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  .cursor-glow {
+    position: fixed;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(76,195,247,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+  }
+
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 4rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  .hero-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    animation: drift 12s ease-in-out infinite alternate;
+  }
+  .blob1 { width: 500px; height: 500px; background: rgba(76,195,247,0.07); top: -100px; right: -100px; }
+  .blob2 { width: 400px; height: 400px; background: rgba(124,92,252,0.07); bottom: -80px; left: 10%; animation-delay: -4s; }
+
+  @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(30px,20px) scale(1.05); } }
+
+  .hero-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--accent); opacity: 0.6; }
+
+  .hero-name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--text);
+    position: relative;
+    margin-bottom: 0.25rem;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+  .hero-name span.accent { color: var(--accent); }
+
+  .hero-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 1rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin: 1.25rem 0 2rem;
+    position: relative;
+    animation: fadeUp 0.8s ease 0.25s both;
+  }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    color: rgba(232,234,246,0.7);
+    max-width: 560px;
+    line-height: 1.8;
+    position: relative;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+
+  .hero-contact-strip {
+    margin-top: 1rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    position: relative;
+    animation: fadeUp 0.8s ease 0.55s both;
+  }
+
+  .contact-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--muted2);
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .contact-item span.dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); opacity: 0.6; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+
+  section { padding: 6rem 4rem; position: relative; }
+  section:nth-child(even) { background: var(--bg2); }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .section-label::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--accent); opacity: 0.4; }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 3rem;
+    line-height: 1.1;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .skill-group { background: var(--card); padding: 2rem; transition: background 0.2s; }
+  .skill-group:hover { background: var(--bg3); }
+
+  .skill-group-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted2);
+    margin-bottom: 1rem;
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+  .skill-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 2px;
+    border: 1px solid var(--border-hi);
+    color: var(--text);
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+  .skill-tag.hi { border-color: rgba(76,195,247,0.3); color: var(--accent); }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.25s, transform 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .project-card:hover { border-color: var(--border-hi); transform: translateY(-2px); }
+  .project-card.featured { border-color: rgba(76,195,247,0.2); grid-column: span 2; }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .project-card:hover::before { opacity: 0.6; }
+
+  .project-num { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; color: var(--muted2); margin-bottom: 1rem; }
+
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  .project-desc { font-size: 0.92rem; color: rgba(232,234,246,0.6); line-height: 1.7; flex: 1; margin-bottom: 1.5rem; }
+
+  .project-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 2px;
+    margin-bottom: 0.5rem;
+    background: rgba(76,195,247,0.08);
+    color: var(--accent);
+    border: 1px solid rgba(76,195,247,0.2);
+  }
+  .project-badge.paper { background: rgba(105,240,174,0.08); color: var(--green); border-color: rgba(105,240,174,0.2); }
+
+  .project-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
+  .stack-tag { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted2); padding: 0.15rem 0.5rem; border: 1px solid var(--border); border-radius: 2px; }
+
+  /* EDUCATION */
+  .edu-timeline { display: flex; flex-direction: column; position: relative; }
+  .edu-timeline::before {
+    content: '';
+    position: absolute;
+    left: 1.1rem; top: 0.5rem; bottom: 0.5rem;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    opacity: 0.3;
+  }
+
+  .edu-item { display: flex; gap: 2rem; padding: 1.5rem 0; padding-left: 3.5rem; position: relative; }
+  .edu-item::before {
+    content: '';
+    position: absolute;
+    left: 0.55rem; top: 1.9rem;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    opacity: 0.7;
+  }
+
+  .edu-year { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted2); white-space: nowrap; padding-top: 0.2rem; min-width: 90px; letter-spacing: 0.05em; }
+  .edu-body { flex: 1; }
+  .edu-degree { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--text); margin-bottom: 0.2rem; }
+  .edu-school { font-family: 'Lora', serif; font-style: italic; font-size: 0.88rem; color: var(--muted); margin-bottom: 0.4rem; }
+  .edu-score { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--accent); letter-spacing: 0.05em; }
+
+  /* CERTS */
+  .cert-list { display: flex; flex-direction: column; gap: 1px; }
+  .cert-item {
+    display: flex; align-items: flex-start; gap: 1.5rem;
+    padding: 1.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .cert-item:first-child { border-radius: 4px 4px 0 0; }
+  .cert-item:last-child { border-radius: 0 0 4px 4px; }
+  .cert-item:not(:last-child) { border-bottom: none; }
+  .cert-item:hover { background: var(--bg3); border-color: var(--border-hi); }
+  .cert-icon { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: rgba(76,195,247,0.08); border: 1px solid rgba(76,195,247,0.15); border-radius: 2px; flex-shrink: 0; font-size: 1rem; }
+  .cert-name { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 0.95rem; color: var(--text); }
+  .cert-meta { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted2); margin-top: 0.2rem; }
+
+  /* AWARD */
+  .achievement-block {
+    display: flex; align-items: center; gap: 1.5rem;
+    padding: 2rem;
+    background: var(--card);
+    border: 1px solid rgba(255,213,79,0.15);
+    border-radius: 4px;
+    position: relative; overflow: hidden;
+  }
+  .achievement-block::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--amber); }
+  .award-icon { font-size: 2rem; }
+  .award-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--amber); margin-bottom: 0.25rem; }
+  .award-desc { font-size: 0.9rem; color: rgba(232,234,246,0.6); }
+
+  footer {
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; color: var(--muted2); letter-spacing: 0.05em; }
+  .footer-note { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted2); letter-spacing: 0.05em; }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { gap: 1.5rem; }
+    section { padding: 4rem 1.5rem; }
+    #hero { padding: 7rem 1.5rem 3rem; }
+    .project-card.featured { grid-column: span 1; }
+    footer { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor-glow" id="glow"></div>
+
+<nav>
+  <a href="#hero" class="nav-logo">MSP</a>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="mailto:shivaprasadmadderla@gmail.com">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-blob blob1"></div>
+  <div class="hero-blob blob2"></div>
+
+  <div class="hero-tag">Available for Internships · Chennai, India</div>
+  <h1 class="hero-name">Madherla<br><span class="accent">Shiva Prasad</span></h1>
+  <p class="hero-title">// CSE Student &nbsp;·&nbsp; Data Analyst &nbsp;·&nbsp; ML Engineer</p>
+  <p class="hero-desc">Computer Science Engineering student with a sharp focus on data analysis, machine learning, and building systems that derive real-world insight from complex datasets. Currently finishing B.E. at SIST, Chennai.</p>
+
+  <div class="hero-contact-strip">
+    <div class="contact-item"><span class="dot"></span>shivaprasadmadderla@gmail.com</div>
+    <div class="contact-item"><span class="dot"></span>+91 8125417385</div>
+    <div class="contact-item"><span class="dot"></span>CGPA: 7.26 / 10</div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-label">01 &nbsp; Skills</div>
+  <h2 class="section-title">Technical Stack</h2>
+  <div class="skills-grid">
+    <div class="skill-group">
+      <div class="skill-group-label">Programming Languages</div>
+      <div class="skill-tags">
+        <span class="skill-tag hi">Python</span>
+        <span class="skill-tag">HTML</span>
+        <span class="skill-tag">CSS</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Data &amp; Analytics</div>
+      <div class="skill-tags">
+        <span class="skill-tag hi">SQL / MySQL</span>
+        <span class="skill-tag hi">Power BI</span>
+        <span class="skill-tag">Pandas</span>
+        <span class="skill-tag">NumPy</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Machine Learning</div>
+      <div class="skill-tags">
+        <span class="skill-tag hi">Scikit-learn</span>
+        <span class="skill-tag">SHAP</span>
+        <span class="skill-tag">LIME</span>
+        <span class="skill-tag">Super Learner</span>
+        <span class="skill-tag">Matplotlib</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-label">Developer Tools</div>
+      <div class="skill-tags">
+        <span class="skill-tag">VS Code</span>
+        <span class="skill-tag">GitHub</span>
+        <span class="skill-tag">Eclipse</span>
+        <span class="skill-tag">MS Excel</span>
+        <span class="skill-tag">Jupyter</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-label">02 &nbsp; Projects</div>
+  <h2 class="section-title">Selected Work</h2>
+  <div class="projects-grid">
+
+    <div class="project-card featured">
+      <div class="project-num">01 — Featured</div>
+      <span class="project-badge paper">Paper Under Review · ISSF 2026</span>
+      <h3 class="project-title">LiverAI — Enhancing Early Detection of Liver Disease Using Meta-Learning</h3>
+      <p class="project-desc">Built a high-accuracy liver disease prediction system using clinical patient data. Applied multiple ML algorithms and improved accuracy with the Super Learner ensemble technique. Used SHAP and LIME for model interpretability and feature-level explainability. Paper submitted to ISSF 2026 International Conference.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">Scikit-learn</span>
+        <span class="stack-tag">Super Learner</span>
+        <span class="stack-tag">SHAP</span>
+        <span class="stack-tag">LIME</span>
+        <span class="stack-tag">Pandas</span>
+        <span class="stack-tag">NumPy</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">02</div>
+      <span class="project-badge">ML · Forecasting</span>
+      <h3 class="project-title">Predictive Analysis Tool for Climate Change Impact</h3>
+      <p class="project-desc">Developed a weather prediction model using the Seattle weather dataset. Performed extensive data cleaning and visualization before applying ML algorithms to forecast future weather conditions.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">Pandas</span>
+        <span class="stack-tag">Matplotlib</span>
+        <span class="stack-tag">Scikit-learn</span>
+        <span class="stack-tag">Jupyter</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-num">03</div>
+      <span class="project-badge">Frontend · UI Design</span>
+      <h3 class="project-title">Weather App — Frontend UI</h3>
+      <p class="project-desc">Designed and built a static weather application interface with a clean, modern layout. Created a responsive structure using HTML and CSS that presents weather information in a user-friendly visual format.</p>
+      <div class="project-stack">
+        <span class="stack-tag">HTML</span>
+        <span class="stack-tag">CSS</span>
+        <span class="stack-tag">Responsive Design</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="education">
+  <div class="section-label">03 &nbsp; Education</div>
+  <h2 class="section-title">Academic Background</h2>
+  <div class="edu-timeline">
+    <div class="edu-item">
+      <div class="edu-year">2022 – 2026</div>
+      <div class="edu-body">
+        <div class="edu-degree">B.E. in Computer Science &amp; Engineering</div>
+        <div class="edu-school">Sathyabama Institute of Science and Technology, Chennai</div>
+        <div class="edu-score">CGPA: 7.26 / 10</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year">2020 – 2022</div>
+      <div class="edu-body">
+        <div class="edu-degree">Class XII — CBSE</div>
+        <div class="edu-school">Viswasanthi EM High School</div>
+        <div class="edu-score">72.4%</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year">CBSE</div>
+      <div class="edu-body">
+        <div class="edu-degree">Class X — CBSE</div>
+        <div class="edu-school">Aditya Birla Public School, Gulbarga, AP</div>
+        <div class="edu-score">56.4%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="section-label">04 &nbsp; Certifications</div>
+  <h2 class="section-title">Credentials &amp; Recognition</h2>
+
+  <div class="cert-list">
+    <div class="cert-item">
+      <div class="cert-icon">🌐</div>
+      <div>
+        <div class="cert-name">ISSF 2026 International Conference</div>
+        <div class="cert-meta">Participant — Research paper presentation</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">💻</div>
+      <div>
+        <div class="cert-name">Web Development</div>
+        <div class="cert-meta">Bharat Intern · April 10, 2024</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">☁️</div>
+      <div>
+        <div class="cert-name">Oracle Cloud Infrastructure</div>
+        <div class="cert-meta">Oracle · March 28, 2024</div>
+      </div>
+    </div>
+    <div class="cert-item">
+      <div class="cert-icon">🤖</div>
+      <div>
+        <div class="cert-name">Machine Learning</div>
+        <div class="cert-meta">Imarticus Learning · October 12, 2024</div>
+      </div>
+    </div>
+  </div>
+
+  <br><br>
+
+  <div class="achievement-block">
+    <div class="award-icon">🏆</div>
+    <div>
+      <div class="award-title">Luminary Awardee</div>
+      <div class="award-desc">Selected for exceptional performance and recognition among top performers at Sathyabama Institute of Science and Technology.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">MADHERLA SHIVA PRASAD</div>
+  <div class="footer-note">Chennai, India &nbsp;·&nbsp; CSE 2026 Batch &nbsp;·&nbsp; shivaprasadmadderla@gmail.com</div>
+</footer>
+
+<script>
+  const glow = document.getElementById('glow');
+  document.addEventListener('mousemove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+</script>
+
+</body>
+</html>
